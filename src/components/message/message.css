@@ -1,0 +1,25 @@
+.message {
+  background-color: #a4dfff;
+  padding: 5px;
+  max-width: 400px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.message .text {
+  font-size: 13px;
+}
+
+.message .date {
+  color: rgba(0, 0, 0, 0.52);
+  text-align: right;
+  font-size: 11px;
+}
+
+.partner {
+  border-radius: 5px 5px 5px 0;
+}
+
+.user {
+  border-radius: 5px 5px 0 5px;
+}

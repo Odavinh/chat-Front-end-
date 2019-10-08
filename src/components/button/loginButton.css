@@ -1,0 +1,19 @@
+.loginButton button {
+  width: 270px;
+  height: 40px;
+  background-color: #0173b1;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-radius: 5px;
+  transition: 0.5s linear;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.loginButton button:hover {
+  background-color: #0788ce;
+}
+
+.loginButton button:active {
+  transition: none;
+  border: solid 5px #0173b1;
+}

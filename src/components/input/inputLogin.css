@@ -1,0 +1,19 @@
+.inputLabel {
+  border-bottom: solid 2px #0173b1;
+  width: 270px;
+  margin: 20px;
+  height: 30px;
+  background: none;
+  margin: 8px 0;
+}
+.inputLabel input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  margin: 0 4px;
+}
+
+.inputLabel .error {
+  border-bottom: solid 3px red;
+}
