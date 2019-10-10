@@ -1,26 +1,17 @@
 import React from "react";
+import {BrowserRouter, Route} from "react-router-dom";
+
 import "./App.css";
-import {AuthButton, Message, AuthInput} from "./components/index";
+
+import {Register} from "./modules";
 
 function App() {
-  const state = {artName: ""};
-
-  const onChangeValue = value => {
-    state.artName = value;
-    console.log(state.artName);
-  };
   return (
-    <div className="App">
-      <Message text="h" id={1} date="12-04-2032" isAuthor={true} />
-      <AuthInput
-        name="user"
-        value={state.artName}
-        placeholder="Password"
-        onChangeValue={onChangeValue}
-        error={false}
-      />
-      <AuthButton text="Login" />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Route path={"/api/user/register"} component={Register} />
+      </div>
+    </BrowserRouter>
   );
 }
 

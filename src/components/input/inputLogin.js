@@ -6,7 +6,7 @@ import "./inputLogin.css";
 
 const Input = props => {
   const changeHandler = e => {
-    props.onChangeValue(e.target.value);
+    props.onChangeValue(e.target.value, e.target.name);
   };
 
   return (
@@ -26,6 +26,7 @@ Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
+  onChange: PropTypes.func,
   error: PropTypes.bool
 };
 

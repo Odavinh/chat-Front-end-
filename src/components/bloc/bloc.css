@@ -1,0 +1,6 @@
+.bloc {
+  border: solid 1px #0788ce5e;
+  max-width: max-content;
+  box-shadow: 10px 5px 10px 1px rgba(128, 128, 128, 0.185);
+  padding: 10px;
+}

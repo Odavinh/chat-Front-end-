@@ -1,0 +1,18 @@
+.register {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.register form {
+  padding: 30px;
+}
+.register .header {
+  text-align: center;
+}
+.register p {
+  justify-content: center;
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 2px;
+}
