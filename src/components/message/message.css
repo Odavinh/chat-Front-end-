@@ -1,13 +1,15 @@
 .message {
   background-color: #a4dfff;
   padding: 5px;
-  max-width: 400px;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 100%;
+  max-width: max-content;
 }
 
 .message .text {
   font-size: 13px;
+  max-width: 400px;
+  max-width: max-content;
 }
 
 .message .date {
@@ -22,4 +24,5 @@
 
 .user {
   border-radius: 5px 5px 0 5px;
+  background-color: #0f9de9;
 }

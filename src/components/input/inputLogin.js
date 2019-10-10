@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 import "./inputLogin.css";
 
@@ -9,7 +10,7 @@ const Input = props => {
   };
 
   return (
-    <div className="inputLabel">
+    <div className={classNames("inputLabel", props.error ? "error" : "")}>
       <input
         placeholder={props.placeholder}
         type="text"
@@ -24,7 +25,8 @@ const Input = props => {
 Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  error: PropTypes.bool
 };
 
 export default Input;

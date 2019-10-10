@@ -1,8 +1,6 @@
 import React from "react";
 import "./App.css";
-import Button from "./components/button/loginButton";
-import Input from "./components/input/inputLogin";
-import Message from "./components/message/message";
+import {AuthButton, Message, AuthInput} from "./components/index";
 
 function App() {
   const state = {artName: ""};
@@ -13,14 +11,15 @@ function App() {
   };
   return (
     <div className="App">
-      <Message text="hjkdd" id={1} date="12-04-2032" isAuthor={true} />
-      <Input
+      <Message text="h" id={1} date="12-04-2032" isAuthor={true} />
+      <AuthInput
         name="user"
         value={state.artName}
         placeholder="Password"
         onChangeValue={onChangeValue}
+        error={false}
       />
-      <Button text="Login" />
+      <AuthButton text="Login" />
     </div>
   );
 }
