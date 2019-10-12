@@ -1,13 +1,11 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
-import {SERVER} from "../../../config";
 import "../auth.css";
 
-const register = props => {
-  const user = {login: "", email: "", password: ""};
+const login = props => {
+  const user = {email: "", password: ""};
 
   const onChangeValue = (value, name) => {
     user[name] = value;
@@ -16,28 +14,15 @@ const register = props => {
   const submitHandler = async e => {
     e.preventDefault();
     console.log(user);
-    try {
-      const response = await axios.post(SERVER + "/api/user/register", user);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
     <div className="auth">
       <Bloc>
         <div className="header">
-          <p>Create your account.</p>
-          <p> It’s free and only takes a minute.</p>
+          <p>Log in to your account</p>
         </div>
-        <form className="registerForm" onSubmit={submitHandler}>
-          <AuthInput
-            placeholder="Login"
-            onChangeValue={onChangeValue}
-            name="login"
-            value={user.login}
-          />
+        <form className="loginForm" onSubmit={submitHandler}>
           <AuthInput
             placeholder="Email"
             onChangeValue={onChangeValue}
@@ -51,13 +36,13 @@ const register = props => {
             name="password"
             value={user.password}
           />
-          <AuthButton text="Sign up" />
+          <AuthButton text="Log in" />
         </form>
         <div className="header">
           <p>
-            Already have an account?
-            <NavLink to="/api/user/login" className="link">
-              Log in
+            Don’t have an account?
+            <NavLink to="/api/user/register" className="link">
+              Sing up
             </NavLink>
           </p>
         </div>
@@ -66,4 +51,4 @@ const register = props => {
   );
 };
 
-export default register;
+export default login;

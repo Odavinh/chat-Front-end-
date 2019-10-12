@@ -1,16 +1,16 @@
-.register {
+.auth {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.register form {
-  padding: 30px;
+.auth form {
+  padding: 50px;
 }
-.register .header {
+.auth .header {
   text-align: center;
 }
-.register p {
+.auth p {
   justify-content: center;
   color: black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

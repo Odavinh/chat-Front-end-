@@ -13,7 +13,7 @@ const Input = props => {
     <div className={classNames("inputLabel", props.error ? "error" : "")}>
       <input
         placeholder={props.placeholder}
-        type="text"
+        type={props.type || "text"}
         name={props.name}
         defaultValue={props.value}
         onChange={changeHandler.bind(this)}
@@ -27,7 +27,8 @@ Input.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default Input;
