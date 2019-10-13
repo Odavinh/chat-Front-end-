@@ -1,0 +1,55 @@
+.dialog {
+  width: 250px;
+  height: 50px;
+  background-color: #0788ce60;
+  border-left: solid 3px #0788ce00;
+  padding: 3px;
+  margin-left: 10px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+.dialog:hover {
+  background-color: #0788ce71;
+}
+.dialog:active {
+  border-left: solid 3px #0788ce;
+  background-color: #0788ce60;
+}
+
+.dialog img {
+  height: 48px;
+  border-radius: 10px;
+}
+.dialog .body {
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+}
+.dialog .status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.dialog .line {
+  height: 10px;
+  width: 10px;
+  background-color: gray;
+  border-radius: 20px;
+}
+.dialog .online {
+  background-color: rgb(0, 172, 0);
+}
+.dialog .offline {
+  background-color: rgb(255, 95, 95);
+}
+
+.dialog h5 {
+  color: black;
+  margin: 0;
+  text-align: center;
+}
+.dialog p {
+  color: rgba(0, 0, 0, 0.52);
+  text-align: right;
+  font-size: 11px;
+  margin: 0;
+  padding: 0 2px 0 0;
+}

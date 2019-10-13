@@ -53,7 +53,7 @@ const register = props => {
           />
           <AuthButton text="Sign up" />
         </form>
-        <div className="header">
+        <div className="footer">
           <p>
             Already have an account?
             <NavLink to="/api/user/login" className="link">

@@ -38,7 +38,7 @@ const login = props => {
           />
           <AuthButton text="Log in" />
         </form>
-        <div className="header">
+        <div className="footer">
           <p>
             Don’t have an account?
             <NavLink to="/api/user/register" className="link">

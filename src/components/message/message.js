@@ -16,7 +16,7 @@ const Message = props => {
   );
 };
 
-Message.prototype = {
+Message.propTypes = {
   text: PropTypes.string,
   date: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
