@@ -2,14 +2,13 @@
   background-color: #a4dfff;
   padding: 5px;
   display: grid;
-  grid-template-rows: 1fr 100%;
   max-width: max-content;
+  grid-template-rows: 1fr 100%;
 }
 
 .message .text {
   font-size: 13px;
   max-width: 400px;
-  max-width: max-content;
 }
 
 .message .date {

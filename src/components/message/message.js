@@ -4,23 +4,28 @@ import className from "classnames";
 
 import "./message.css";
 
-const Message = props => {
+const Message = ({isAuthor, id, date, text}) => {
   return (
     <div
-      className={className("message", props.isAuthor ? "user" : "partner")}
-      value={props.id}
+      className={className("message", isAuthor ? "user" : "partner")}
+      value={id}
     >
-      <label className="date">{props.date}</label>
-      <label className="text">{props.text}</label>
+      <label className="date">{date}</label>
+      <label className="text">{text}</label>
     </div>
   );
 };
 
 Message.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
   date: PropTypes.string,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isAuthor: PropTypes.bool
+};
+
+Message.defaultProps = {
+  date: "",
+  isAuthor: true
 };
 
 export default Message;

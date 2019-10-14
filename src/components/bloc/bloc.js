@@ -1,8 +1,17 @@
-import React from "react";
+import React, {Component} from "react";
+import PropType from "prop-types";
 import "./bloc.css";
 
-const bloc = props => {
-  return <div className="bloc">{props.children}</div>;
-};
+class Bloc extends Component {
+  static propType = {
+    children: PropType.element
+  };
+  static defaultProps = {
+    children: null
+  };
+  render() {
+    return <div className="bloc">{this.props.children}</div>;
+  }
+}
 
-export default bloc;
+export default Bloc;

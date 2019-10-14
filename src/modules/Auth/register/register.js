@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
 
@@ -6,64 +6,73 @@ import {Bloc, AuthInput, AuthButton} from "../../../components";
 import {SERVER} from "../../../config";
 import "../auth.css";
 
-const register = props => {
-  const user = {login: "", email: "", password: ""};
+class Register extends Component {
+  state = {login: "", email: "", password: ""};
+  error = "";
 
-  const onChangeValue = (value, name) => {
-    user[name] = value;
+  onChangeValue = (value, name) => {
+    this.setState({[name]: value});
   };
 
-  const submitHandler = async e => {
+  submitHandler = async e => {
     e.preventDefault();
-    console.log(user);
+    console.log(this.state);
     try {
-      const response = await axios.post(SERVER + "/api/user/register", user);
+      const response = await axios.post(
+        SERVER + "/api/user/register",
+        this.state.user
+      );
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+  render() {
+    return (
+      <div className="auth">
+        <Bloc>
+          <div className="header">
+            <p>Create your account.</p>
+            <p> It’s free and only takes a minute.</p>
+          </div>
+          <p className="text-error">{this.error ? this.error : ""}</p>
+          <form className="registerForm" onSubmit={this.submitHandler}>
+            <AuthInput
+              placeholder="Login"
+              onChangeValue={this.onChangeValue}
+              name="login"
+              value={this.state.login}
+              error={this.error}
+            />
+            <AuthInput
+              placeholder="Email"
+              onChangeValue={this.onChangeValue}
+              name="email"
+              value={this.state.email}
+              error={this.error}
+            />
+            <AuthInput
+              placeholder="Password"
+              onChangeValue={this.onChangeValue}
+              type="password"
+              name="password"
+              value={this.state.password}
+              error={this.error}
+            />
+            <AuthButton text="Sign up" />
+          </form>
+          <div className="footer">
+            <p>
+              Already have an account?
+              <NavLink to="/api/user/login" className="link">
+                Log in
+              </NavLink>
+            </p>
+          </div>
+        </Bloc>
+      </div>
+    );
+  }
+}
 
-  return (
-    <div className="auth">
-      <Bloc>
-        <div className="header">
-          <p>Create your account.</p>
-          <p> It’s free and only takes a minute.</p>
-        </div>
-        <form className="registerForm" onSubmit={submitHandler}>
-          <AuthInput
-            placeholder="Login"
-            onChangeValue={onChangeValue}
-            name="login"
-            value={user.login}
-          />
-          <AuthInput
-            placeholder="Email"
-            onChangeValue={onChangeValue}
-            name="email"
-            value={user.email}
-          />
-          <AuthInput
-            placeholder="Password"
-            onChangeValue={onChangeValue}
-            type="password"
-            name="password"
-            value={user.password}
-          />
-          <AuthButton text="Sign up" />
-        </form>
-        <div className="footer">
-          <p>
-            Already have an account?
-            <NavLink to="/api/user/login" className="link">
-              Log in
-            </NavLink>
-          </p>
-        </div>
-      </Bloc>
-    </div>
-  );
-};
-
-export default register;
+export default Register;

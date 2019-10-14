@@ -1,54 +1,58 @@
-import React from "react";
+import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
 import "../auth.css";
 
-const login = props => {
-  const user = {email: "", password: ""};
+class Login extends Component {
+  state = {email: "", password: ""};
+  error = "";
 
-  const onChangeValue = (value, name) => {
-    user[name] = value;
+  onChangeValue = (value, name) => {
+    this.setState({[name]: value});
   };
+  render() {
+    const submitHandler = async e => {
+      e.preventDefault();
+      console.log(this.state);
+    };
+    return (
+      <div className="auth">
+        <Bloc>
+          <div className="header">
+            <p>Log in to your account</p>
+          </div>
+          <p className="text-error">{this.error ? this.error : ""}</p>
+          <form className="loginForm" onSubmit={submitHandler}>
+            <AuthInput
+              placeholder="Email"
+              onChangeValue={this.onChangeValue}
+              name="email"
+              value={this.state.email}
+              error={this.error}
+            />
+            <AuthInput
+              placeholder="Password"
+              onChangeValue={this.onChangeValue}
+              type="password"
+              name="password"
+              value={this.state.password}
+              error={this.error}
+            />
+            <AuthButton text="Log in" />
+          </form>
+          <div className="footer">
+            <p>
+              Don’t have an account?
+              <NavLink to="/api/user/register" className="link">
+                Sing up
+              </NavLink>
+            </p>
+          </div>
+        </Bloc>
+      </div>
+    );
+  }
+}
 
-  const submitHandler = async e => {
-    e.preventDefault();
-    console.log(user);
-  };
-
-  return (
-    <div className="auth">
-      <Bloc>
-        <div className="header">
-          <p>Log in to your account</p>
-        </div>
-        <form className="loginForm" onSubmit={submitHandler}>
-          <AuthInput
-            placeholder="Email"
-            onChangeValue={onChangeValue}
-            name="email"
-            value={user.email}
-          />
-          <AuthInput
-            placeholder="Password"
-            onChangeValue={onChangeValue}
-            type="password"
-            name="password"
-            value={user.password}
-          />
-          <AuthButton text="Log in" />
-        </form>
-        <div className="footer">
-          <p>
-            Don’t have an account?
-            <NavLink to="/api/user/register" className="link">
-              Sing up
-            </NavLink>
-          </p>
-        </div>
-      </Bloc>
-    </div>
-  );
-};
-
-export default login;
+export default Login;

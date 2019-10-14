@@ -4,18 +4,18 @@ import classNames from "classnames";
 
 import "./inputLogin.css";
 
-const Input = props => {
+const Input = ({error, onChangeValue, placeholder, type, name, value}) => {
   const changeHandler = e => {
-    props.onChangeValue(e.target.value, e.target.name);
+    onChangeValue(e.target.value, e.target.name);
   };
 
   return (
-    <div className={classNames("inputLabel", props.error ? "error" : "")}>
+    <div className={classNames("inputLabel", error ? "error" : "")}>
       <input
-        placeholder={props.placeholder}
-        type={props.type || "text"}
-        name={props.name}
-        defaultValue={props.value}
+        placeholder={placeholder}
+        type={type}
+        name={name}
+        defaultValue={value}
         onChange={changeHandler.bind(this)}
       ></input>
     </div>
@@ -23,12 +23,17 @@ const Input = props => {
 };
 
 Input.propTypes = {
-  name: PropTypes.string,
-  value: PropTypes.string,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.bool,
   type: PropTypes.string
+};
+
+Input.defaultProps = {
+  placeholder: "",
+  type: "text",
+  onChange: () => {}
 };
 
 export default Input;
