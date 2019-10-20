@@ -1,13 +1,15 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
-import {SERVER} from "../../../config";
+import {BASE_PATH} from "../../../config";
 import "../auth.css";
 
+const SEARCH_PATH = "/api/user/register";
+//const SEARCH_PARAM = "query=";
+
 class Register extends Component {
-  state = {login: "", email: "", password: ""};
+  state = {login: "", email: "", password: "", searchQuery: ""};
   error = "";
 
   onChangeValue = (value, name) => {
@@ -17,16 +19,25 @@ class Register extends Component {
   submitHandler = async e => {
     e.preventDefault();
     console.log(this.state);
-    try {
-      const response = await axios.post(
-        SERVER + "/api/user/register",
-        this.state.user
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    /*
+      request
+      */
+    const {email, password, login} = this.state;
+    fetch(`${BASE_PATH}${SEARCH_PATH}`)
+      .then(res => res.json({email, password, login}))
+      .then(res => this.resultReq(res))
+      .catch(error => console.log(error));
+    this.setState({
+      email: "",
+      password: "",
+      login: ""
+    });
   };
+
+  resultReq(result) {
+    console.log(result);
+  }
+
   render() {
     return (
       <div className="auth">
@@ -42,14 +53,14 @@ class Register extends Component {
               onChangeValue={this.onChangeValue}
               name="login"
               value={this.state.login}
-              error={this.error}
+              error={Boolean(this.error)}
             />
             <AuthInput
               placeholder="Email"
               onChangeValue={this.onChangeValue}
               name="email"
               value={this.state.email}
-              error={this.error}
+              error={Boolean(this.error)}
             />
             <AuthInput
               placeholder="Password"
@@ -57,7 +68,7 @@ class Register extends Component {
               type="password"
               name="password"
               value={this.state.password}
-              error={this.error}
+              error={Boolean(this.error)}
             />
             <AuthButton text="Sign up" />
           </form>

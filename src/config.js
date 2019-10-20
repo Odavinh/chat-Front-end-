@@ -6,4 +6,4 @@ dotenv.config({path: root(".env")});
 
 export const isProduction = process.env.NODE_ENV === "production";
 export const isDevelopment = !isProduction;
-export const SERVER = process.env.SERVER;
+export const BASE_PATH = "http://localhost:4000";

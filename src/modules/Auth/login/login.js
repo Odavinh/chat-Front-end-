@@ -2,7 +2,10 @@ import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
+import {BASE_PATH} from "../../../config";
 import "../auth.css";
+
+const SEARCH_PATH = "/api/user/login";
 
 class Login extends Component {
   state = {email: "", password: ""};
@@ -15,6 +18,20 @@ class Login extends Component {
     const submitHandler = async e => {
       e.preventDefault();
       console.log(this.state);
+      /*
+      request
+      */
+      const {email, password} = this.state;
+      fetch(`${BASE_PATH}${SEARCH_PATH}`, {
+        method: "POST",
+        body: {email, password}
+      })
+        .then(res => console.log(res))
+        .catch(error => console.log(error));
+      this.setState({
+        email: "",
+        password: ""
+      });
     };
     return (
       <div className="auth">
@@ -29,7 +46,7 @@ class Login extends Component {
               onChangeValue={this.onChangeValue}
               name="email"
               value={this.state.email}
-              error={this.error}
+              error={Boolean(this.error)}
             />
             <AuthInput
               placeholder="Password"
@@ -37,7 +54,7 @@ class Login extends Component {
               type="password"
               name="password"
               value={this.state.password}
-              error={this.error}
+              error={Boolean(this.error)}
             />
             <AuthButton text="Log in" />
           </form>
