@@ -27,7 +27,7 @@ class Login extends Component {
         body: {email, password}
       })
         .then(res => console.log(res))
-        .catch(error => console.log(error));
+        .catch(error => (error = console.log(error)));
       this.setState({
         email: "",
         password: ""

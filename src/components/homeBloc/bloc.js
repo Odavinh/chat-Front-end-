@@ -1,17 +1,18 @@
-import React, {Component} from "react";
+import React from "react";
 import PropType from "prop-types";
+import classNames from "classnames";
 import "./bloc.css";
 
-class Bloc extends Component {
-  static propType = {
-    children: PropType.element
-  };
-  static defaultProps = {
-    children: null
-  };
-  render() {
-    return <div className="Home-bloc">{this.props.children}</div>;
-  }
-}
+const HomeBloc = ({children, className}) => {
+  return <div className={classNames("Home-bloc", className)}>{children}</div>;
+};
 
-export default Bloc;
+HomeBloc.propType = {
+  children: PropType.element
+};
+
+HomeBloc.defaultProps = {
+  children: null
+};
+
+export default HomeBloc;

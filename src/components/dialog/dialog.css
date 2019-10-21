@@ -5,7 +5,6 @@
   border: solid 1px #0788ce;
   border-left: solid 3px #0788ce00;
   padding: 3px;
-  margin-left: 10px;
   display: grid;
   grid-template-columns: 1fr 4fr;
 }
