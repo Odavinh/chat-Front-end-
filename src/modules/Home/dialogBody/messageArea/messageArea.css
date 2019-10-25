@@ -1,4 +1,12 @@
 .message-Area {
-  height: 420px;
-  width: 900px;
+  display: grid;
+  min-height: 94vh;
+  grid-template-rows: 90% 10%;
+}
+
+.message-Area ul {
+  list-style-type: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
 }

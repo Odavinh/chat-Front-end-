@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import "./dialog.css";
 
 const Dialog = ({id, image, lastOnline, login, Change}) => {
-  const onClick = () => {
+  const onClick = e => {
+    e.preventDefault();
     Change(id);
   };
   return (

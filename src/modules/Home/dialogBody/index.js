@@ -5,15 +5,15 @@ import FormSendMsg from "./formSendMsg/form";
 import MessageArea from "./messageArea/messageArea";
 
 class DialogBody extends Component {
-  propTypes = {
+  static propTypes = {
     DialogId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired
   };
   render() {
     return (
       <div className="dialogBody">
-        <MessageArea DialogId={this.props.DialogBody} />
-        <FormSendMsg DialogId={this.props.DialogBody} />
+        <MessageArea DialogId={this.props.DialogId} />
+        <FormSendMsg DialogId={this.props.DialogId} />
       </div>
     );
   }

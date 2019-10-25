@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "./form.css";
 
 class FormSendMsg extends Component {
-  propTypes = {
+  static propTypes = {
     DialogId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired
   };

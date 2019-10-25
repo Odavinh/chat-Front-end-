@@ -12,7 +12,7 @@ class Home extends Component {
     return (
       <HomeBloc className="home">
         <Sidebar />
-        <DialogBody DialogId="23" />
+        <DialogBody DialogId="8" />
       </HomeBloc>
     );
   }

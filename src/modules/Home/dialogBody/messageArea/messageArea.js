@@ -15,23 +15,27 @@ const messages = [
 ];
 
 class MessageArea extends Component {
-  propTypes = {
+  static propTypes = {
     DialogId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired
   };
   render() {
     return (
       <div className="message-Area">
-        {messages.map(message => {
-          return (
-            <Message
-              id={message.id}
-              text={message.text}
-              date={message.date}
-              isAuthor={message.isAuthor}
-            />
-          );
-        })}
+        <ul>
+          {messages.map(message => {
+            return (
+              <li key={message.id}>
+                <Message
+                  id={message.id}
+                  text={message.text}
+                  date={message.date}
+                  isAuthor={message.isAuthor}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
