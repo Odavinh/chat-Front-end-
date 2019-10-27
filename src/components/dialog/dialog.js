@@ -15,10 +15,7 @@ const Dialog = ({id, image, lastOnline, login, Change}) => {
       <div className="body">
         <div className="status">
           <div
-            className={className(
-              "line",
-              lastOnline === "online" ? "offline" : "online"
-            )}
+            className={className("line", lastOnline ? "offline" : "online")}
           ></div>
           <p>{lastOnline ? lastOnline : "online"}</p>
         </div>

@@ -1,0 +1,8 @@
+.simple-input {
+  border: solid 1px #0788ce;
+  transition: 0.7s linear;
+}
+
+.simple-input:focus {
+  border: solid 1px #f8fcff75;
+}

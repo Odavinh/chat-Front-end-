@@ -10,3 +10,7 @@
   padding-right: 10px;
   margin: 0;
 }
+
+.message-Area ul li {
+  padding: 2px;
+}

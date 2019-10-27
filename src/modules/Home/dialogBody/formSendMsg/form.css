@@ -1,3 +1,8 @@
 .form-msg {
-  color: black;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+}
+.form-msg .form-input {
+  font-size: 16px;
+  height: 25px;
 }

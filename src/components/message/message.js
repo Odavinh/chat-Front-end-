@@ -6,12 +6,14 @@ import "./message.css";
 
 const Message = ({isAuthor, id, date, text}) => {
   return (
-    <div
-      className={className("message", isAuthor ? "user" : "partner")}
-      value={id}
-    >
-      <label className="date">{date}</label>
-      <label className="text">{text}</label>
+    <div className="bubble">
+      <div
+        className={className("message", isAuthor ? "user" : "partner")}
+        value={id}
+      >
+        <label className="date">{date}</label>
+        <label className="text">{text}</label>
+      </div>
     </div>
   );
 };

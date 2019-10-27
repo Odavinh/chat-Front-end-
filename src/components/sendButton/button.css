@@ -1,0 +1,12 @@
+.send-button {
+  color: white;
+  border: solid 1px #0173b1;
+  background-color: #0173b1;
+  text-transform: uppercase;
+  transition: 0.3s linear;
+}
+
+.send-button:active {
+  background-color: white;
+  color: black;
+}

@@ -13,3 +13,13 @@
 .sidebar ul li {
   list-style-type: none;
 }
+
+.sidebar form {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+.sidebar form .find-input {
+  font-size: 14px;
+  height: 22px;
+}

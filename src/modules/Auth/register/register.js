@@ -1,16 +1,14 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+
+import {registerFetch} from "../../../actions/auth";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
-import {BASE_PATH} from "../../../config";
 import "../auth.css";
 
-const SEARCH_PATH = "/api/user/register";
-//const SEARCH_PARAM = "query=";
-
 class Register extends Component {
-  state = {login: "", email: "", password: "", searchQuery: ""};
-  error = "";
+  state = {login: "", email: "", password: ""};
 
   onChangeValue = (value, name) => {
     this.setState({[name]: value});
@@ -18,15 +16,8 @@ class Register extends Component {
 
   submitHandler = async e => {
     e.preventDefault();
-    console.log(this.state);
-    /*
-      request
-      */
     const {email, password, login} = this.state;
-    fetch(`${BASE_PATH}${SEARCH_PATH}`)
-      .then(res => res.json({email, password, login}))
-      .then(res => this.resultReq(res))
-      .catch(error => console.log(error));
+    this.props.registerUser("/api/user/register", email, password, login);
     this.setState({
       email: "",
       password: "",
@@ -34,11 +25,19 @@ class Register extends Component {
     });
   };
 
-  resultReq(result) {
-    console.log(result);
-  }
-
   render() {
+    const {err, message} = this.props;
+    const field = String(err).split('"')[1];
+
+    if (message)
+      return (
+        <Redirect
+          to={{
+            pathname: "/api/user/login",
+            state: {register: message}
+          }}
+        />
+      );
     return (
       <div className="auth">
         <Bloc>
@@ -46,21 +45,21 @@ class Register extends Component {
             <p>Create your account.</p>
             <p> It’s free and only takes a minute.</p>
           </div>
-          <p className="text-error">{this.error ? this.error : ""}</p>
+          <p className="text-error">{err ? err : ""}</p>
           <form className="registerForm" onSubmit={this.submitHandler}>
             <AuthInput
               placeholder="Login"
               onChangeValue={this.onChangeValue}
               name="login"
               value={this.state.login}
-              error={Boolean(this.error)}
+              error={Boolean(field === "login")}
             />
             <AuthInput
               placeholder="Email"
               onChangeValue={this.onChangeValue}
               name="email"
               value={this.state.email}
-              error={Boolean(this.error)}
+              error={Boolean(field === "email")}
             />
             <AuthInput
               placeholder="Password"
@@ -68,7 +67,7 @@ class Register extends Component {
               type="password"
               name="password"
               value={this.state.password}
-              error={Boolean(this.error)}
+              error={Boolean(field === "password")}
             />
             <AuthButton text="Sign up" />
           </form>
@@ -86,4 +85,18 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  err: state.auth.err,
+  message: state.auth.message,
+  isLoading: state.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  registerUser: (url, login, email, password) =>
+    dispatch(registerFetch(url, login, email, password))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register);

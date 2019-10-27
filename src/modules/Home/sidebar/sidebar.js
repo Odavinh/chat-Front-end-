@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
-import {Dialog} from "../../../components";
+import {Dialog, Button, Input} from "../../../components";
 import {connect} from "react-redux";
 import {dialogsFetchData} from "../../../actions/dialog";
 
@@ -13,34 +12,44 @@ class Sidebar extends Component {
 
   state = {
     searchQuery: "",
-    result: {}
+    findUser: {}
   };
 
   dialogActive(id) {
     console.log(id);
   }
+  onChangeInput(value) {
+    this.setState({findUser: value});
+  }
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(this.state.findUser);
+  }
   render() {
     const {dialogs} = this.props;
-    console.log(dialogs);
     if (dialogs.isLoading) return null;
     return (
       <div className="sidebar">
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <Input
+            className="find-input"
+            name="find"
+            onChangeValue={this.onChangeInput.bind(this)}
+            placeholder="Find your friend!"
+          />
+          <Button className="find-button" text="Find" />
+        </form>
         <ul>
           {dialogs.dialogs.map(dialog => {
             return (
               <li key={dialog.id}>
-                <NavLink
-                  to={`/dialog/${+dialog.id}`}
-                  style={{textDecoration: "none"}}
-                >
-                  <Dialog
-                    Change={this.dialogActive}
-                    id={dialog.id}
-                    image={dialog.image}
-                    lastOnline={dialog.lastOnline}
-                    login={dialog.login}
-                  />
-                </NavLink>
+                <Dialog
+                  Change={this.dialogActive}
+                  id={dialog.id}
+                  image={dialog.image}
+                  lastOnline={dialog.lastOnline}
+                  login={dialog.login}
+                />
               </li>
             );
           })}
