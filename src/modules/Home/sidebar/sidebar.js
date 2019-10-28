@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import {Dialog, Button, Input} from "../../../components";
 import {connect} from "react-redux";
 import {dialogsFetchData} from "../../../actions/dialog";
@@ -9,21 +10,19 @@ class Sidebar extends Component {
   componentDidMount() {
     this.props.getDialogs("/");
   }
-
-  state = {
-    searchQuery: "",
-    findUser: {}
+  static propTypes = {
+    dialogActive: PropTypes.func.isRequired,
+    findUser: PropTypes.func.isRequired
   };
-
-  dialogActive(id) {
-    console.log(id);
+  dialogChange(id) {
+    this.props.dialogActive(id);
   }
   onChangeInput(value) {
     this.setState({findUser: value});
   }
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state.findUser);
+    this.props.findUser(this.state.findUser);
   }
   render() {
     const {dialogs} = this.props;
@@ -44,7 +43,7 @@ class Sidebar extends Component {
             return (
               <li key={dialog.id}>
                 <Dialog
-                  Change={this.dialogActive}
+                  Change={this.dialogChange.bind(this)}
                   id={dialog.id}
                   image={dialog.image}
                   lastOnline={dialog.lastOnline}

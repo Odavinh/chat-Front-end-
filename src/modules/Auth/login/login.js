@@ -3,6 +3,10 @@ import {NavLink, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {loginFetch} from "../../../actions/auth";
+import {
+  setTokenLocalStorage,
+  setUserIdLocalStorage
+} from "../../../actions/authData";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
 import "../auth.css";
@@ -28,9 +32,13 @@ class Login extends Component {
     });
   };
   render() {
-    const {err, message} = this.props;
+    const {err, message, id, token} = this.props;
     const field = String(err).split('"')[1];
-    if (message) return <Redirect to="/" />;
+    if (message) {
+      this.props.setId(id);
+      this.props.setToken(token);
+      return <Redirect to="/" />;
+    }
     return (
       <div className="auth">
         <Bloc>
@@ -73,12 +81,16 @@ class Login extends Component {
 const mapStateToProps = state => ({
   err: state.auth.err,
   message: state.auth.message,
-  isLoading: state.isLoading
+  isLoading: state.auth.isLoading,
+  token: state.auth.token,
+  id: state.auth.id
 });
 
 const mapDispatchToProps = dispatch => ({
   loginUser: (url, email, password) =>
-    dispatch(loginFetch(url, email, password))
+    dispatch(loginFetch(url, email, password)),
+  setId: id => setUserIdLocalStorage(id),
+  setToken: token => setTokenLocalStorage(token)
 });
 
 export default connect(

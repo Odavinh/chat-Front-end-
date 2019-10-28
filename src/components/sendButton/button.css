@@ -6,6 +6,10 @@
   transition: 0.3s linear;
 }
 
+.send-button:hover {
+  background-color: #0094e4;
+}
+
 .send-button:active {
   background-color: white;
   color: black;

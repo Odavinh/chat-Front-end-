@@ -19,7 +19,7 @@ const messages = [
     isAuthor: false
   },
   {
-    id: 16,
+    id: 11,
     text: "test",
     date: "12:01 11,8",
     isAuthor: true

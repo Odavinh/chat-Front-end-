@@ -1,6 +1,7 @@
 .bubble {
   width: 100%;
   height: max-content;
+  min-height: 40px;
 }
 .message {
   background-color: #a4dfff;
@@ -22,11 +23,11 @@
 }
 
 .partner {
-  border-radius: 5px 5px 5px 0;
+  border-radius: 8px 8px 8px 0;
 }
 
 .user {
-  border-radius: 5px 5px 0 5px;
+  border-radius: 8px 8px 0 8px;
   background-color: #0f9de9;
   float: right;
 }
