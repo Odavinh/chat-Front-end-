@@ -40,6 +40,10 @@ export const dialogsFetchData = url => async dispatch => {
   try {
     dispatch(dialogsFetchDataStarted());
     const data = await fetch(BASE_PATH + url).then(response => response.json());
+    if (data.error) {
+      dispatch(dialogsFetchDataFailure(data.error));
+      return;
+    }
     dispatch(dialogsFetchDataSuccess(data.dialogs));
   } catch (err) {
     dispatch(dialogsFetchDataFailure(err));
@@ -52,7 +56,11 @@ export const dialogAddFathData = (url, partnerId) => async dispatch => {
     const data = await fetch(`${BASE_PATH}${url}/${partnerId}`).then(res =>
       res.json()
     );
-    dispatch(dialogAddFetchDataSuccess(data.dialog));
+    if (data.error) {
+      dispatch(dialogsFetchDataFailure(data.error));
+      return;
+    }
+    dispatch(dialogsFetchDataSuccess(data.dialog));
   } catch (err) {
     dispatch(dialogsFetchDataFailure(err));
   }

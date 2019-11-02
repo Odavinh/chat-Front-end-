@@ -5,7 +5,7 @@ import {
   SET_USER_ID,
   GET_USER_LOGIN,
   SET_USER_LOGIN
-} from "../types/user";
+} from "../types/authData";
 
 export const getToken = token => ({
   type: GET_TOKEN,

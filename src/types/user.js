@@ -1,6 +1,11 @@
-export const SET_USER_ID = "SET_USER__ID";
-export const GET_USER_ID = "GET_USER_ID";
-export const SET_USER_LOGIN = "SET_USER_LOGIN";
-export const GET_USER_LOGIN = "GET_USER_LOGIN";
-export const SET_TOKEN = "SET_TOKEN";
-export const GET_TOKEN = "GET_TOKEN";
+export const GET_USER__STARTED = "GET_USER__STARTED";
+export const GET_USER__SUCCESS = "GET_USER__SUCCESS";
+export const GET_USER__FAILURE = "GET_USER__FAILURE";
+
+export const PUT_USER__STARTED = "PUT_USER__STARTED";
+export const PUT_USER__SUCCESS = "PUT_USER__SUCCESS";
+export const PUT_USER__FAILURE = "PUT_USER__FAILURE";
+
+export const DELETE_USER__STARTED = "PUT_USER__STARTED";
+export const DELETE_USER__SUCCESS = "PUT_USER__SUCCESS";
+export const DELETE_USER__FAILURE = "PUT_USER__FAILURE";

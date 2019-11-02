@@ -6,8 +6,8 @@ import Login from "./login/login";
 const Auth = () => {
   return (
     <div className="auth">
-      <Route path={"/api/user/register"} component={Register} />
-      <Route path={"/api/user/login"} component={Login} />
+      <Route exact path={"/api/user/register"} component={Register} />
+      <Route exact path={"/api/user/login"} component={Login} />
     </div>
   );
 };

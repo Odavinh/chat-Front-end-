@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 
 import {HomeBloc} from "../../components";
 
@@ -10,23 +10,34 @@ import DialogBody from "./dialogBody/index";
 import "./home.css";
 
 class Home extends Component {
+  state = {dialogId: "", login: ""};
   dialogActive(id) {
-    console.log(id);
+    this.setState({id});
   }
   findUser(login) {
-    console.log(login);
+    this.setState({login});
+  }
+  redirectToUserPage() {
+    if (this.state.login) {
+      return <Redirect to={"/user/" + this.state.login} />;
+    }
   }
 
   render() {
     return (
       <HomeBloc className="home">
+        {this.redirectToUserPage()}
         <Sidebar
           dialogActive={this.dialogActive}
           findUser={this.findUser.bind(this)}
         />
         <Switch>
-          <Route path="/dialog/23" component={DialogBody} DialogId="8" />
-          <Route path="/user/:id" component={UserPage} />
+          <Route
+            path={"/dialog/" + this.state.dialogId}
+            component={DialogBody}
+            DialogId="8"
+          />
+          <Route path={"/user/" + this.state.login} component={UserPage} />
         </Switch>
       </HomeBloc>
     );
