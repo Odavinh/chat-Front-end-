@@ -26,7 +26,7 @@ export const authData = (state = {}, action) => {
     case GET_USER_ID:
       return {
         ...state,
-        token: action.id
+        id: action.id
       };
 
     case SET_USER_LOGIN:
@@ -36,7 +36,7 @@ export const authData = (state = {}, action) => {
     case GET_USER_LOGIN:
       return {
         ...state,
-        token: action.login
+        login: action.login
       };
     default:
       return state;
