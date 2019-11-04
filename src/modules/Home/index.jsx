@@ -28,14 +28,14 @@ class Home extends Component {
       <HomeBloc className="home">
         {this.redirectToUserPage()}
         <Sidebar
-          dialogActive={this.dialogActive}
+          dialogActive={this.dialogActive.bind(this)}
           findUser={this.findUser.bind(this)}
         />
         <Switch>
           <Route
             path={"/dialog/" + this.state.dialogId}
             component={DialogBody}
-            DialogId="8"
+            DialogId={this.state.dialogId}
           />
           <Route path={"/user/" + this.state.login} component={UserPage} />
         </Switch>

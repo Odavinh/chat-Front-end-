@@ -25,6 +25,6 @@ export const message = (state = {}, action) => {
       };
 
     default:
-      break;
+      return state;
   }
 };
