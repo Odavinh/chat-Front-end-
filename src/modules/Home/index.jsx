@@ -11,9 +11,7 @@ import "./home.css";
 
 class Home extends Component {
   state = {dialogId: "", login: ""};
-  dialogActive(id) {
-    this.setState({id});
-  }
+
   findUser(login) {
     this.setState({login});
   }
@@ -27,17 +25,10 @@ class Home extends Component {
     return (
       <HomeBloc className="home">
         {this.redirectToUserPage()}
-        <Sidebar
-          dialogActive={this.dialogActive.bind(this)}
-          findUser={this.findUser.bind(this)}
-        />
+        <Sidebar findUser={this.findUser.bind(this)} />
         <Switch>
-          <Route
-            path={"/dialog/" + this.state.dialogId}
-            component={DialogBody}
-            DialogId={this.state.dialogId}
-          />
-          <Route path={"/user/" + this.state.login} component={UserPage} />
+          <Route path={"/dialog/:dialogId"} component={DialogBody} />
+          <Route path={"/user/:" + this.state.login} component={UserPage} />
         </Switch>
       </HomeBloc>
     );

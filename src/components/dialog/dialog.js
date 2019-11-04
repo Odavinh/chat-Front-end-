@@ -5,12 +5,8 @@ import PropTypes from "prop-types";
 import "./dialog.css";
 
 const Dialog = ({id, image, lastOnline, login, Change}) => {
-  const onClick = e => {
-    e.preventDefault();
-    Change(id);
-  };
   return (
-    <div className="dialog" onClick={onClick}>
+    <div className="dialog">
       <img src={image} alt="" />
       <div className="body">
         <div className="status">
@@ -29,8 +25,7 @@ Dialog.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   login: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  lastOnline: PropTypes.string,
-  Change: PropTypes.func.isRequired
+  lastOnline: PropTypes.string
 };
 
 Dialog.defaultProps = {

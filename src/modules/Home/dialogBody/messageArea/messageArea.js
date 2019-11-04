@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import {Message} from "../../../../components";
@@ -14,40 +13,38 @@ import "./messageArea.css";
 //     id: 136,
 //     text: "Hello",
 //     date: "12:01 11,8",
-//     isAuthor: true
+//     author: true
 //   },
 //   {
 //     id: 16,
 //     text: "123467890",
 //     date: "12:01 11,8",
-//     isAuthor: false
+//     author: false
 //   },
 //   {
 //     id: 11,
 //     text: "test",
 //     date: "12:01 11,8",
-//     isAuthor: true
+//     author: true
 //   }
 // ];
 
 class MessageArea extends Component {
-  static propTypes = {
-    DialogId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired
-  };
-
   componentDidMount() {
-    this.getMessages("/dialog", this.props.dialogId);
+    this.getMessages(
+      "/dialog",
+      window.location.pathname.split("/").slice(-1)[0]
+    );
     this.state.getId();
   }
 
   render() {
     const {messages} = this.props;
-    const id = this.state.userId;
+    const id = this.props.userId;
     return (
       <div className="message-Area">
         <ul>
-          {messages.messages.map(message => {
+          {messages.map(message => {
             return (
               <li key={message.id}>
                 <Message

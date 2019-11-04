@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 
 import {Input, Button} from "../../../../components/index";
 
@@ -7,16 +6,11 @@ import "./form.css";
 
 class FormSendMsg extends Component {
   state = {message: ""};
-  static propTypes = {
-    DialogId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired
-  };
   onChangeValue(value) {
     this.setState({message: value});
   }
   submitHandler(e) {
     e.preventDefault();
-    console.log(this.state);
     this.setState({message: ""});
   }
   render() {

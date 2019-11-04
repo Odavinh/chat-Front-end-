@@ -1,6 +1,7 @@
 .sidebar {
   text-decoration: none;
   width: max-content;
+  min-height: 98vh;
   border-right: solid 1px #0788ce;
 }
 

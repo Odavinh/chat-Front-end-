@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {NavLink} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Dialog, Button, Input} from "../../../components";
 import {connect} from "react-redux";
@@ -11,12 +12,8 @@ class Sidebar extends Component {
     this.props.getDialogs("/");
   }
   static propTypes = {
-    dialogActive: PropTypes.func.isRequired,
     findUser: PropTypes.func.isRequired
   };
-  dialogChange(id) {
-    this.props.dialogActive(id);
-  }
   onChangeInput(value) {
     this.setState({findUser: value});
   }
@@ -42,13 +39,17 @@ class Sidebar extends Component {
           {dialogs.dialogs.map(dialog => {
             return (
               <li key={dialog.id}>
-                <Dialog
-                  Change={this.dialogChange.bind(this)}
-                  id={dialog.id}
-                  image={dialog.image}
-                  lastOnline={dialog.lastOnline}
-                  login={dialog.login}
-                />
+                <NavLink
+                  to={"/dialog/" + dialog.id}
+                  style={{textDecoration: "none"}}
+                >
+                  <Dialog
+                    id={dialog.id}
+                    image={dialog.image}
+                    lastOnline={dialog.lastOnline}
+                    login={dialog.login}
+                  />
+                </NavLink>
               </li>
             );
           })}
