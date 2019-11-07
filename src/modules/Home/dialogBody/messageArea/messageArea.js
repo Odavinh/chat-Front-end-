@@ -44,7 +44,7 @@ class MessageArea extends Component {
     return (
       <div className="message-Area">
         <ul>
-          {messages.map(message => {
+          {messages.messages.map(message => {
             return (
               <li key={message.id}>
                 <Message

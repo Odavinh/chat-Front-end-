@@ -28,7 +28,7 @@ class Home extends Component {
         <Sidebar findUser={this.findUser.bind(this)} />
         <Switch>
           <Route path={"/dialog/:dialogId"} component={DialogBody} />
-          <Route path={"/user/:" + this.state.login} component={UserPage} />
+          <Route path={"/user/:login"} component={UserPage} />
         </Switch>
       </HomeBloc>
     );

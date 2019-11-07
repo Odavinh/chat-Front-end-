@@ -17,6 +17,7 @@ export const getUserFetchDataSuccess = (
   id,
   image,
   last_online,
+  email,
   login,
   createAt
 ) => ({
@@ -24,6 +25,7 @@ export const getUserFetchDataSuccess = (
   id,
   image: BASE_PATH + "/" + image,
   last_online,
+  email,
   login,
   createAt
 });
@@ -48,6 +50,7 @@ export const getUserFetchData = (url, Login) => async dispatch => {
         data.id,
         data.image,
         data.last_online,
+        data.email,
         data.login,
         data.createAt
       )

@@ -21,6 +21,7 @@ export const user = (state = {}, action) => {
         isLoading: false,
         id: action.id,
         login: action.login,
+        email: action.email,
         image: action.image,
         last_online: action.last_online,
         createAt: action.createAt
