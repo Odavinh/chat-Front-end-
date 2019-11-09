@@ -6,7 +6,7 @@ import {
   USER_REGISTER__SUCCESS,
   USER_REGISTER__FAILURE
 } from "../types/auth";
-import {BASE_PATH} from "../config";
+import {BASE_PATH, isDevelopment} from "../config";
 
 export const registerFetchSuccess = (message, err) => ({
   type: USER_REGISTER__SUCCESS,
@@ -23,11 +23,12 @@ export const registerFetchStarted = () => ({
   type: USER_REGISTER__STARTED
 });
 
-export const loginFetchSuccess = (message, err, token, id) => ({
+export const loginFetchSuccess = (message, err, token, id, login) => ({
   type: USER_LOGIN__SUCCESS,
   message,
   id,
   token,
+  login,
   err
 });
 
@@ -49,12 +50,17 @@ export const registerFetch = (
   try {
     dispatch(registerFetchStarted());
     const data = await fetch(BASE_PATH + url, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      mode: "cors",
       method: "POST",
       body: JSON.stringify({email, password, login})
     }).then(response => response.json());
     dispatch(registerFetchSuccess(data.message, data.error));
   } catch (err) {
-    dispatch(registerFetchFailure(err));
+    if (isDevelopment) console.log(err);
+    dispatch(registerFetchFailure("Request error!"));
   }
 };
 
@@ -62,11 +68,24 @@ export const loginFetch = (url, email, password) => async dispatch => {
   try {
     dispatch(loginFetchStarted());
     const data = await fetch(BASE_PATH + url, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      mode: "cors",
       method: "POST",
       body: JSON.stringify({email, password})
     }).then(response => response.json());
-    dispatch(loginFetchSuccess(data.message, data.error, data.token, data.id));
+    dispatch(
+      loginFetchSuccess(
+        data.message,
+        data.error,
+        data.token,
+        data.id,
+        data.login
+      )
+    );
   } catch (err) {
-    dispatch(loginFetchFailure(err));
+    if (!isDevelopment) console.log(err);
+    dispatch(loginFetchFailure("Request error!"));
   }
 };

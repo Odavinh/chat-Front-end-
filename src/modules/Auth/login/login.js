@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 import {loginFetch} from "../../../actions/auth";
 import {
   setTokenLocalStorage,
-  setUserIdLocalStorage
+  setUserIdLocalStorage,
+  settUserLoginLocalStorage
 } from "../../../actions/authData";
 
 import {Bloc, AuthInput, AuthButton} from "../../../components";
@@ -31,12 +32,15 @@ class Login extends Component {
       error: ""
     });
   };
+
   render() {
-    const {err, message, id, token} = this.props;
+    const {err, message, id, token, login} = this.props;
     const field = String(err).split('"')[1];
     if (message) {
+      console.log(message);
       this.props.setId(id);
       this.props.setToken(token);
+      this.props.setLogin(login);
       return <Redirect to="/" />;
     }
     return (
@@ -83,6 +87,7 @@ const mapStateToProps = state => ({
   message: state.auth.message,
   isLoading: state.auth.isLoading,
   token: state.auth.token,
+  login: state.auth.login,
   id: state.auth.id
 });
 
@@ -90,7 +95,8 @@ const mapDispatchToProps = dispatch => ({
   loginUser: (url, email, password) =>
     dispatch(loginFetch(url, email, password)),
   setId: id => setUserIdLocalStorage(id),
-  setToken: token => setTokenLocalStorage(token)
+  setToken: token => setTokenLocalStorage(token),
+  setLogin: login => settUserLoginLocalStorage(login)
 });
 
 export default connect(

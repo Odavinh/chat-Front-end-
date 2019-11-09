@@ -6,7 +6,7 @@ import {
   GET_ALL_DIALOG_FAILURE,
   GET_ALL_DIALOG__STARTED
 } from "../types/dialog";
-import {BASE_PATH} from "../config";
+import {BASE_PATH, isDevelopment} from "../config";
 
 export const dialogAddFetchDataSuccess = (id, image, lastOnline, login) => ({
   type: ADD_DIALOG__SUCCESS,
@@ -39,29 +39,39 @@ export const dialogsFetchDataStarted = () => ({
 export const dialogsFetchData = url => async dispatch => {
   try {
     dispatch(dialogsFetchDataStarted());
-    const data = await fetch(BASE_PATH + url).then(response => response.json());
+    const data = await fetch(BASE_PATH + url, {
+      headers: {
+        "auth-token": localStorage.getItem("token")
+      },
+      mode: "cors"
+    }).then(response => response.json());
     if (data.error) {
       dispatch(dialogsFetchDataFailure(data.error));
       return;
     }
     dispatch(dialogsFetchDataSuccess(data.dialogs));
   } catch (err) {
-    dispatch(dialogsFetchDataFailure(err));
+    if (isDevelopment) console.log(err);
+    dispatch(dialogsFetchDataFailure("Request error!"));
   }
 };
 
 export const dialogAddFathData = (url, partnerId) => async dispatch => {
   try {
     dispatch(dialogAddFetchDataStarted());
-    const data = await fetch(`${BASE_PATH}${url}/${partnerId}`).then(res =>
-      res.json()
-    );
+    const data = await fetch(`${BASE_PATH}${url}/${partnerId}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token")
+      },
+      mode: "cors"
+    }).then(res => res.json());
     if (data.error) {
       dispatch(dialogsFetchDataFailure(data.error));
       return;
     }
     dispatch(dialogsFetchDataSuccess(data.dialog));
   } catch (err) {
-    dispatch(dialogsFetchDataFailure(err));
+    if (isDevelopment) console.log(err);
+    dispatch(dialogsFetchDataFailure("Request error!"));
   }
 };

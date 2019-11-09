@@ -6,7 +6,7 @@ import {
   DELETE_USER__SUCCESS,
   DELETE_USER__FAILURE
 } from "../types/user";
-import {BASE_PATH} from "../config";
+import {BASE_PATH, isDevelopment} from "../config";
 
 // GET USER
 export const getUserFetchDataStarted = () => ({
@@ -23,7 +23,7 @@ export const getUserFetchDataSuccess = (
 ) => ({
   type: GET_USER__SUCCESS,
   id,
-  image: BASE_PATH + "/" + image,
+  image: BASE_PATH + image,
   last_online,
   email,
   login,
@@ -38,9 +38,12 @@ export const getUserFetchDataFailure = error => ({
 export const getUserFetchData = (url, Login) => async dispatch => {
   try {
     dispatch(getUserFetchDataStarted());
-    const data = await fetch(`${BASE_PATH}${url}/${Login}`).then(response =>
-      response.json()
-    );
+    const data = await fetch(`${BASE_PATH}${url}/${Login}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token")
+      },
+      mode: "cors"
+    }).then(response => response.json());
     if (data.error) {
       dispatch(getUserFetchDataFailure(data.error));
       return;
@@ -56,7 +59,8 @@ export const getUserFetchData = (url, Login) => async dispatch => {
       )
     );
   } catch (err) {
-    dispatch(getUserFetchDataFailure(err));
+    if (isDevelopment) console.log(err);
+    dispatch(getUserFetchDataFailure("Request error!"));
   }
 };
 
@@ -80,6 +84,9 @@ export const deleteUserFetchData = (url, id) => async dispatch => {
   try {
     dispatch(deleteUserFetchDataStarted());
     const data = await fetch(`${BASE_PATH}${url}/${id}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token")
+      },
       method: "DELETE"
     }).then(response => response.json());
     if (data.error) {
@@ -88,6 +95,7 @@ export const deleteUserFetchData = (url, id) => async dispatch => {
     }
     dispatch(deleteUserFetchDataSuccess(data.message));
   } catch (err) {
-    dispatch(getUserFetchDataFailure(err));
+    if (isDevelopment) console.log(err);
+    dispatch(getUserFetchDataFailure("Request error!"));
   }
 };

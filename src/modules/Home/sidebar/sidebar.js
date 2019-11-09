@@ -12,8 +12,7 @@ class Sidebar extends Component {
   state = {login: ""};
   componentDidMount() {
     this.props.getDialogs("/");
-    const login = this.props.getLogin();
-    this.setState({login});
+    this.props.getLogin();
   }
   static propTypes = {
     findUser: PropTypes.func.isRequired
@@ -27,13 +26,11 @@ class Sidebar extends Component {
   }
   render() {
     const {dialogs} = this.props;
+    const {login} = this.props.login;
     if (dialogs.isLoading) return null;
     return (
       <div className="sidebar">
-        <RedirectArea
-          text=" ← Your profile"
-          path={"/user/" + this.state.login}
-        />
+        <RedirectArea text=" ← Your profile" path={"/user/" + login} />
         <form onSubmit={this.onSubmit.bind(this)}>
           <Input
             className="find-input"
@@ -74,7 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getDialogs: url => dispatch(dialogsFetchData(url)),
-  getLogin: () => getUserLoginLocalStorage()
+  getLogin: () => dispatch(getUserLoginLocalStorage())
 });
 
 export default connect(

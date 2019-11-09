@@ -18,7 +18,7 @@ export const auth = (state = {}, action) => {
       return {
         ...state,
         isLoading: false,
-        massage: action.massage,
+        message: action.message,
         err: action.err
       };
     case USER_REGISTER__FAILURE:
@@ -36,9 +36,10 @@ export const auth = (state = {}, action) => {
       return {
         ...state,
         isLoading: false,
-        massage: action.massage,
+        message: action.message,
         err: action.err,
         token: action.token,
+        login: action.login,
         id: action.id
       };
     case USER_LOGIN__FAILURE:

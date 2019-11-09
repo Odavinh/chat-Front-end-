@@ -34,27 +34,27 @@ export const setUserLogin = () => ({
   type: SET_USER_LOGIN
 });
 
-export const getTokenLocalStorage = () => {
+export const getTokenLocalStorage = () => dispatch => {
   const token = localStorage.getItem("token");
-  getToken(token);
+  dispatch(getToken(token));
 };
 
 export const setTokenLocalStorage = token => {
   localStorage.setItem("token", token);
 };
 
-export const getUserIdLocalStorage = () => {
+export const getUserIdLocalStorage = () => dispatch => {
   const id = localStorage.getItem("id");
-  getUserId(id);
+  dispatch(getUserId(id));
 };
 
 export const setUserIdLocalStorage = id => {
   localStorage.setItem("id", id);
 };
 
-export const getUserLoginLocalStorage = () => {
+export const getUserLoginLocalStorage = () => dispatch => {
   const login = localStorage.getItem("login");
-  getToken(login);
+  dispatch(getUserLogin(login));
 };
 
 export const settUserLoginLocalStorage = login => {
