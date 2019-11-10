@@ -1,6 +1,6 @@
 .message-Area {
   display: grid;
-  min-height: 94vh;
+  min-height: 87vh;
   grid-template-rows: 90% 10%;
 }
 

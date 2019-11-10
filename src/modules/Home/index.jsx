@@ -10,7 +10,7 @@ import DialogBody from "./dialogBody/index";
 import "./home.css";
 
 class Home extends Component {
-  state = {dialogId: "", login: ""};
+  state = {dialogId: "", login: "", dialogData: {}};
 
   findUser(login) {
     this.setState({login});
@@ -21,13 +21,23 @@ class Home extends Component {
     }
   }
 
+  getDialogData(...dialogData) {
+    this.setState({dialogData});
+  }
+
   render() {
     return (
       <HomeBloc className="home">
         {this.redirectToUserPage()}
-        <Sidebar findUser={this.findUser.bind(this)} />
+        <Sidebar
+          findUser={this.findUser.bind(this)}
+          getDialogData={this.getDialogData.bind(this)}
+        />
         <Switch>
-          <Route path={"/dialog/:dialogId"} component={DialogBody} />
+          <Route
+            path={"/dialog/:dialogId"}
+            component={() => <DialogBody dialogData={this.state.dialogData} />}
+          />
           <Route path={"/user/:login"} component={UserPage} />
         </Switch>
       </HomeBloc>

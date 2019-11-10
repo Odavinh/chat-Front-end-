@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 import "./dialog.css";
 
 const Dialog = ({id, image, lastOnline, login, Change}) => {
+  const onClickDialog = () => {
+    Change(login, lastOnline);
+  };
+
   return (
-    <div className="dialog">
+    <div className="dialog" onClick={onClickDialog}>
       <img src={image} alt="" />
       <div className="body">
         <div className="status">
@@ -25,11 +29,13 @@ Dialog.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   login: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  Change: PropTypes.func,
   lastOnline: PropTypes.string
 };
 
 Dialog.defaultProps = {
-  lastOnline: "online"
+  lastOnline: "online",
+  Change: () => {}
 };
 
 export default Dialog;

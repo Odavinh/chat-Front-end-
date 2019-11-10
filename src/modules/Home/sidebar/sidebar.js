@@ -9,13 +9,13 @@ import {getUserLoginLocalStorage} from "../../../actions/authData";
 import "./sidebar.css";
 
 class Sidebar extends Component {
-  state = {login: ""};
   componentDidMount() {
     this.props.getDialogs("/");
     this.props.getLogin();
   }
   static propTypes = {
-    findUser: PropTypes.func.isRequired
+    findUser: PropTypes.func.isRequired,
+    getDialogData: PropTypes.func.isRequired
   };
   onChangeInput(value) {
     this.setState({findUser: value});
@@ -24,6 +24,11 @@ class Sidebar extends Component {
     e.preventDefault();
     this.props.findUser(this.state.findUser);
   }
+
+  ChangeDialog(login, lastOnline) {
+    this.props.getDialogData(login, lastOnline);
+  }
+
   render() {
     const {dialogs} = this.props;
     const {login} = this.props.login;
@@ -52,6 +57,7 @@ class Sidebar extends Component {
                     id={dialog.id}
                     image={dialog.image}
                     lastOnline={dialog.lastOnline}
+                    Change={this.ChangeDialog.bind(this)}
                     login={dialog.login}
                   />
                 </NavLink>
