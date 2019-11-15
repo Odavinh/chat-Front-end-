@@ -1,33 +1,12 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 
-import {Message} from "../../../../components";
+import {Message, Loading} from "../../../../components";
 
 import {getAllMessageFetchData} from "../../../../actions/message";
 import {getUserIdLocalStorage} from "../../../../actions/authData";
 
 import "./messageArea.css";
-
-// const messages = [
-//   {
-//     id: 136,
-//     text: "Hello",
-//     date: "12:01 11,8",
-//     author: 19
-//   },
-//   {
-//     id: 25,
-//     text: "123467890",
-//     date: "12:01 11,8",
-//     author: 10
-//   },
-//   {
-//     id: 11,
-//     text: "test",
-//     date: "12:01 11,8",
-//     author: 19
-//   }
-// ];
 
 class MessageArea extends Component {
   componentDidMount() {
@@ -39,8 +18,11 @@ class MessageArea extends Component {
   }
 
   render() {
-    const {messages} = this.props.messages;
+    const {messages, isLoading} = this.props.messages;
     const id = this.props.userId;
+
+    if (isLoading) return <Loading />;
+
     return (
       <div className="message-Area">
         <ul>
@@ -73,7 +55,4 @@ const mapDispatchToProps = dispatch => ({
   getId: () => dispatch(getUserIdLocalStorage())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessageArea);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageArea);

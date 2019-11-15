@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 import {registerFetch} from "../../../actions/auth";
 
-import {Bloc, AuthInput, AuthButton} from "../../../components";
+import {Bloc, AuthInput, AuthButton, Loading} from "../../../components";
 import "../auth.css";
 
 class Register extends Component {
@@ -26,8 +26,10 @@ class Register extends Component {
   };
 
   render() {
-    const {err, message} = this.props;
+    const {err, message, isLoading} = this.props;
     const field = String(err).split('"')[1];
+
+    if (isLoading) return <Loading text="register" />;
 
     if (message)
       return (
@@ -96,7 +98,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(registerFetch(url, login, email, password))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

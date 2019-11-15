@@ -6,10 +6,10 @@ import {loginFetch} from "../../../actions/auth";
 import {
   setTokenLocalStorage,
   setUserIdLocalStorage,
-  settUserLoginLocalStorage
+  setUserLoginLocalStorage
 } from "../../../actions/authData";
 
-import {Bloc, AuthInput, AuthButton} from "../../../components";
+import {Bloc, AuthInput, AuthButton, Loading} from "../../../components";
 import "../auth.css";
 
 class Login extends Component {
@@ -34,8 +34,9 @@ class Login extends Component {
   };
 
   render() {
-    const {err, message, id, token, login} = this.props;
+    const {err, message, id, token, login, isLoading} = this.props;
     const field = String(err).split('"')[1];
+    if (isLoading) return <Loading text="log in..." />;
     if (message) {
       console.log(message);
       this.props.setId(id);
@@ -96,10 +97,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loginFetch(url, email, password)),
   setId: id => setUserIdLocalStorage(id),
   setToken: token => setTokenLocalStorage(token),
-  setLogin: login => settUserLoginLocalStorage(login)
+  setLogin: login => setUserLoginLocalStorage(login)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

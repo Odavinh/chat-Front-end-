@@ -40,7 +40,8 @@ export const dialog = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.err
+        error: action.err,
+        redirect: action.redirect
       };
     default:
       return state;

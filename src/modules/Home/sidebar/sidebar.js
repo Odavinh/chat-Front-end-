@@ -1,7 +1,13 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import PropTypes from "prop-types";
-import {Dialog, Button, Input, RedirectArea} from "../../../components";
+import {
+  Dialog,
+  Button,
+  Input,
+  RedirectArea,
+  Loading
+} from "../../../components";
 import {connect} from "react-redux";
 import {dialogsFetchData} from "../../../actions/dialog";
 import {getUserLoginLocalStorage} from "../../../actions/authData";
@@ -30,11 +36,12 @@ class Sidebar extends Component {
   }
 
   render() {
-    const {dialogs} = this.props;
+    const {dialogs, redirect, isLoading, error} = this.props.dialogs;
     const {login} = this.props.login;
-    if (dialogs.isLoading) return null;
+    if (isLoading) return <Loading />;
     return (
       <div className="sidebar">
+        {redirect ? <Redirect to="/api/user/login" err={error} /> : null}
         <RedirectArea text=" ← Your profile" path={"/user/" + login} />
         <form onSubmit={this.onSubmit.bind(this)}>
           <Input
@@ -46,7 +53,7 @@ class Sidebar extends Component {
           <Button className="find-button" text="Find" />
         </form>
         <ul>
-          {dialogs.dialogs.map(dialog => {
+          {dialogs.map(dialog => {
             return (
               <li key={dialog.id}>
                 <NavLink
@@ -80,7 +87,4 @@ const mapDispatchToProps = dispatch => ({
   getLogin: () => dispatch(getUserLoginLocalStorage())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

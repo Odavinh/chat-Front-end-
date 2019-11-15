@@ -5,8 +5,11 @@
 
 .user-page img {
   margin-top: 10px;
+  margin-right: 0;
   width: 300px;
   box-shadow: 2px 2px 10px #0173b1;
+  border-radius: 100px;
+  background-color: wheat;
 }
 
 .user-page h5 {
@@ -29,6 +32,11 @@
   width: 20px;
   height: 20px;
   box-shadow: 2px 2px 10px #ff5f5f;
+}
+
+.user-page .user-button {
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .user-page p {

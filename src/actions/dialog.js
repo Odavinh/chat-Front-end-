@@ -27,8 +27,9 @@ export const dialogsFetchDataSuccess = dialogs => ({
   dialogs
 });
 
-export const dialogsFetchDataFailure = err => ({
+export const dialogsFetchDataFailure = (err, redirect) => ({
   type: GET_ALL_DIALOG_FAILURE,
+  redirect,
   err
 });
 
@@ -46,7 +47,7 @@ export const dialogsFetchData = url => async dispatch => {
       mode: "cors"
     }).then(response => response.json());
     if (data.error) {
-      dispatch(dialogsFetchDataFailure(data.error));
+      dispatch(dialogsFetchDataFailure(data.error, data.redirect));
       return;
     }
     dispatch(dialogsFetchDataSuccess(data.dialogs));

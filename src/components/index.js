@@ -7,6 +7,5 @@ export {default as HomeBloc} from "./homeBloc/bloc";
 export {default as Input} from "./SimpleInput/input";
 export {default as Button} from "./sendButton/button";
 export {default as RedirectArea} from "./redirectArea/RedirectArea";
-export {
-  default as DialogInformation
-} from "./dialogInformation/dialogInformation";
+export {default as DialogInformation} from "./dialogInformation/dialogInformation";
+export {default as Loading} from "./Loading/Loading";

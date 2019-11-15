@@ -57,6 +57,6 @@ export const getUserLoginLocalStorage = () => dispatch => {
   dispatch(getUserLogin(login));
 };
 
-export const settUserLoginLocalStorage = login => {
+export const setUserLoginLocalStorage = login => {
   localStorage.setItem("login", login);
 };

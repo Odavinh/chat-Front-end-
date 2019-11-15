@@ -4,20 +4,29 @@ import classNames from "classnames";
 
 import "./button.css";
 
-const SendButton = ({text, className}) => {
+const SendButton = ({text, className, onClick}) => {
+  const onClickButton = () => {
+    onClick();
+  };
   return (
-    <button className={classNames("send-button", className)} type="submit">
+    <button
+      className={classNames("send-button", className)}
+      type="submit"
+      onClick={onClickButton}
+    >
       {text}
     </button>
   );
 };
 
 SendButton.propTypes = {
-  text: PropTypes.string
+  text: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 SendButton.defaultProps = {
-  text: ""
+  text: "",
+  onClick: () => {}
 };
 
 export default SendButton;
