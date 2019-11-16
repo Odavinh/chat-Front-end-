@@ -38,6 +38,7 @@ class Sidebar extends Component {
   render() {
     const {dialogs, redirect, isLoading, error} = this.props.dialogs;
     const {login} = this.props.login;
+    console.log(dialogs);
     if (isLoading) return <Loading />;
     return (
       <div className="sidebar">
@@ -52,6 +53,7 @@ class Sidebar extends Component {
           />
           <Button className="find-button" text="Find" />
         </form>
+        {dialogs ? <div>You currently have no dialogs</div> : null}
         <ul>
           {dialogs.map(dialog => {
             return (

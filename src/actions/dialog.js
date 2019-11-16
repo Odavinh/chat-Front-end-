@@ -61,16 +61,17 @@ export const dialogAddFathData = (url, partnerId) => async dispatch => {
   try {
     dispatch(dialogAddFetchDataStarted());
     const data = await fetch(`${BASE_PATH}${url}/${partnerId}`, {
+      method: "POST",
       headers: {
         "auth-token": localStorage.getItem("token")
       },
       mode: "cors"
     }).then(res => res.json());
     if (data.error) {
-      dispatch(dialogsFetchDataFailure(data.error));
+      dispatch(dialogAddFetchDataFailure(data.error));
       return;
     }
-    dispatch(dialogsFetchDataSuccess(data.dialog));
+    dispatch(dialogAddFetchDataSuccess(data.dialog));
   } catch (err) {
     if (isDevelopment) console.log(err);
     dispatch(dialogsFetchDataFailure("Request error!"));
