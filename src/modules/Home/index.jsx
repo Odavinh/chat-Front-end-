@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 
-import {HomeBloc} from "../../components";
+import {HomeBloc, WarningMessage} from "../../components";
 
 import Sidebar from "./sidebar/sidebar";
 import UserPage from "./UserPage/UserPage";
@@ -9,40 +9,49 @@ import DialogBody from "./dialogBody/index";
 
 import "./home.css";
 
-class Home extends Component {
-  state = {dialogId: "", login: "", dialogData: {}};
+const Home = () => {
+  const [login, setLogin] = useState(null);
+  const [dialogData, setDialogData] = useState({});
 
-  findUser(login) {
-    this.setState({login});
-  }
-  redirectToUserPage() {
-    if (this.state.login) {
-      return <Redirect to={"/user/" + this.state.login} />;
+  const findUser = login => {
+    setLogin(login);
+  };
+  const redirectToUserPage = () => {
+    if (login) {
+      return <Redirect to={"/user/" + login} />;
     }
-  }
+  };
 
-  getDialogData(...dialogData) {
-    this.setState({dialogData});
-  }
+  const getDialogData = (...dialogData) => {
+    setDialogData(dialogData);
+  };
 
-  render() {
-    return (
-      <HomeBloc className="home">
-        {this.redirectToUserPage()}
-        <Sidebar
-          findUser={this.findUser.bind(this)}
-          getDialogData={this.getDialogData.bind(this)}
+  return (
+    <HomeBloc className="home">
+      {redirectToUserPage()}
+      <Sidebar
+        findUser={findUser.bind(this)}
+        getDialogData={getDialogData.bind(this)}
+      />
+      <Switch>
+        <Route
+          path={"/dialog/:dialogId"}
+          component={() => <DialogBody dialogData={dialogData} />}
         />
-        <Switch>
-          <Route
-            path={"/dialog/:dialogId"}
-            component={() => <DialogBody dialogData={this.state.dialogData} />}
-          />
-          <Route path={"/user/:login"} component={UserPage} />
-        </Switch>
-      </HomeBloc>
-    );
-  }
-}
+        <Route path={"/user/:login"} component={UserPage} />
+        <Route
+          except
+          path={"/"}
+          component={() => (
+            <WarningMessage
+              buttonText="Select a dialog or open a user page"
+              className="warning"
+            />
+          )}
+        />
+      </Switch>
+    </HomeBloc>
+  );
+};
 
 export default Home;

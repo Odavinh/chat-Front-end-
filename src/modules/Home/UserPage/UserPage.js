@@ -6,7 +6,7 @@ import {Redirect} from "react-router-dom";
 import {getUserFetchData, deleteUserFetchData} from "../../../actions/user";
 import {dialogAddFathData} from "../../../actions/dialog";
 import {getUserIdLocalStorage} from "../../../actions/authData";
-import {Button, Loading} from "../../../components";
+import {Button, Loading, WarningMessage} from "../../../components";
 
 import "./UserPage.css";
 
@@ -51,10 +51,7 @@ class UserPage extends Component {
       <div className="user-page">
         {this.state.singOut && <Redirect to="/api/user/login" />}
         {error ? (
-          <div style={{color: "red"}}>
-            <h1>!</h1>
-            {error}
-          </div>
+          <WarningMessage topText={error} error={true} />
         ) : (
           <div>
             <div className="user-line">

@@ -6,7 +6,8 @@ import {
   Button,
   Input,
   RedirectArea,
-  Loading
+  Loading,
+  WarningMessage
 } from "../../../components";
 import {connect} from "react-redux";
 import {dialogsFetchData} from "../../../actions/dialog";
@@ -18,6 +19,9 @@ class Sidebar extends Component {
   componentDidMount() {
     this.props.getDialogs("/");
     this.props.getLogin();
+    if (this.props.dialogs.redirect) {
+      return <Redirect to="/api/user/login" err={this.props.dialogs.error} />;
+    }
   }
   static propTypes = {
     findUser: PropTypes.func.isRequired,
@@ -36,13 +40,11 @@ class Sidebar extends Component {
   }
 
   render() {
-    const {dialogs, redirect, isLoading, error} = this.props.dialogs;
+    const {dialogs, isLoading} = this.props.dialogs;
     const {login} = this.props.login;
-    console.log(dialogs);
     if (isLoading) return <Loading />;
     return (
       <div className="sidebar">
-        {redirect ? <Redirect to="/api/user/login" err={error} /> : null}
         <RedirectArea text=" ← Your profile" path={"/user/" + login} />
         <form onSubmit={this.onSubmit.bind(this)}>
           <Input
@@ -53,7 +55,9 @@ class Sidebar extends Component {
           />
           <Button className="find-button" text="Find" />
         </form>
-        {dialogs ? <div>You currently have no dialogs</div> : null}
+        {dialogs ? (
+          <WarningMessage buttonText="You currently have no dialogs" />
+        ) : null}
         <ul>
           {dialogs.map(dialog => {
             return (

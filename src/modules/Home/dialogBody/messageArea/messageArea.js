@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 
-import {Message, Loading} from "../../../../components";
+import {Message, Loading, WarningMessage} from "../../../../components";
 
 import {getAllMessageFetchData} from "../../../../actions/message";
 import {getUserIdLocalStorage} from "../../../../actions/authData";
@@ -18,27 +18,31 @@ class MessageArea extends Component {
   }
 
   render() {
-    const {messages, isLoading} = this.props.messages;
+    const {messages, isLoading, error} = this.props.messages;
     const id = this.props.userId;
 
     if (isLoading) return <Loading />;
 
     return (
       <div className="message-Area">
-        <ul>
-          {messages.map(message => {
-            return (
-              <li key={message.id}>
-                <Message
-                  id={message.id}
-                  text={message.text}
-                  date={message.date}
-                  isAuthor={+message.author === +id}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        {error ? (
+          <WarningMessage topText={error} error={true} />
+        ) : (
+          <ul>
+            {messages.map(message => {
+              return (
+                <li key={message.id}>
+                  <Message
+                    id={message.id}
+                    text={message.text}
+                    date={message.date}
+                    isAuthor={+message.author === +id}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     );
   }

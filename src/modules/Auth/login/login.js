@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {NavLink, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -12,76 +12,71 @@ import {
 import {Bloc, AuthInput, AuthButton, Loading} from "../../../components";
 import "../auth.css";
 
-class Login extends Component {
-  state = {email: "", password: ""};
+const Login = props => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
-  onChangeValue = (value, name) => {
-    this.setState({[name]: value});
+  const onChangeEmail = email => {
+    setEmail(email);
   };
 
-  submitHandler = async e => {
+  const onChangePassword = password => {
+    setPassword(password);
+  };
+
+  const submitHandler = async e => {
     e.preventDefault();
-    this.props.loginUser(
-      "/api/user/login",
-      this.state.email,
-      this.state.password
-    );
-    this.setState({
-      email: "",
-      password: "",
-      error: ""
-    });
+    props.loginUser("/api/user/login", email, password);
+    setEmail(null);
+    setPassword(null);
   };
 
-  render() {
-    const {err, message, id, token, login, isLoading} = this.props;
-    const field = String(err).split('"')[1];
-    if (isLoading) return <Loading text="log in..." />;
-    if (message) {
-      console.log(message);
-      this.props.setId(id);
-      this.props.setToken(token);
-      this.props.setLogin(login);
-      return <Redirect to="/" />;
-    }
-    return (
-      <div className="auth">
-        <Bloc>
-          <div className="header">
-            <p>Log in to your account</p>
-          </div>
-          <p className="text-error">{err ? err : ""}</p>
-          <form className="loginForm" onSubmit={this.submitHandler}>
-            <AuthInput
-              placeholder="Email"
-              onChangeValue={this.onChangeValue}
-              name="email"
-              value={this.state.email}
-              error={field === "email" ? true : false}
-            />
-            <AuthInput
-              placeholder="Password"
-              onChangeValue={this.onChangeValue}
-              type="password"
-              name="password"
-              value={this.state.password}
-              error={field === "password" ? true : false}
-            />
-            <AuthButton text="Log in" />
-          </form>
-          <div className="footer">
-            <p>
-              Don’t have an account?
-              <NavLink to="/api/user/register" className="link">
-                Sing up
-              </NavLink>
-            </p>
-          </div>
-        </Bloc>
-      </div>
-    );
+  const {err, message, id, token, login, isLoading} = props;
+  const field = String(err).split('"')[1];
+  if (isLoading) return <Loading text="log in..." />;
+  if (message) {
+    props.setId(id);
+    props.setToken(token);
+    props.setLogin(login);
+    return <Redirect to="/" />;
   }
-}
+  return (
+    <div className="auth">
+      <Bloc>
+        <div className="header">
+          <p>Log in to your account</p>
+        </div>
+        <p className="text-error">{err ? err : ""}</p>
+        <form className="loginForm" onSubmit={submitHandler}>
+          <AuthInput
+            placeholder="Email"
+            onChangeValue={onChangeEmail}
+            name="email"
+            value={email}
+            error={field === "email" ? true : false}
+          />
+          <AuthInput
+            placeholder="Password"
+            onChangeValue={onChangePassword}
+            type="password"
+            name="password"
+            value={password}
+            error={field === "password" ? true : false}
+          />
+          <AuthButton text="Log in" />
+        </form>
+        <div className="footer">
+          <p>
+            Don’t have an account?
+            <NavLink to="/api/user/register" className="link">
+              Sing up
+            </NavLink>
+          </p>
+        </div>
+      </Bloc>
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   err: state.auth.err,
