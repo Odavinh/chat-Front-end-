@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink, Redirect} from "react-router-dom";
 import PropTypes from "prop-types";
 import {
@@ -15,73 +15,78 @@ import {getUserLoginLocalStorage} from "../../../actions/authData";
 
 import "./sidebar.css";
 
-class Sidebar extends Component {
-  componentDidMount() {
-    this.props.getDialogs("/");
-    this.props.getLogin();
-    if (this.props.dialogs.redirect) {
-      return <Redirect to="/api/user/login" err={this.props.dialogs.error} />;
+const Sidebar = props => {
+  const getDialogs = props.getDialogs;
+  const getLogin = props.getLogin;
+  const redirect = props.dialogs.redirect;
+  const error = props.dialogs.error;
+  const [findUser, setFindUser] = useState(null);
+  useEffect(() => {
+    getDialogs("/");
+    getLogin();
+    if (redirect) {
+      return <Redirect to="/api/user/login" err={error} />;
     }
-  }
-  static propTypes = {
-    findUser: PropTypes.func.isRequired,
-    getDialogData: PropTypes.func.isRequired
+  }, [getDialogs, getLogin, redirect, error]);
+
+  const onChangeInput = value => {
+    setFindUser(value);
   };
-  onChangeInput(value) {
-    this.setState({findUser: value});
-  }
-  onSubmit(e) {
+  const onSubmit = e => {
     e.preventDefault();
-    this.props.findUser(this.state.findUser);
-  }
+    props.findUser(findUser);
+  };
 
-  ChangeDialog(login, lastOnline) {
-    this.props.getDialogData(login, lastOnline);
-  }
+  const ChangeDialog = (login, lastOnline) => {
+    props.getDialogData(login, lastOnline);
+  };
 
-  render() {
-    const {dialogs, isLoading} = this.props.dialogs;
-    const {login} = this.props.login;
-    if (isLoading) return <Loading />;
-    return (
-      <div className="sidebar">
-        <RedirectArea text=" ← Your profile" path={"/user/" + login} />
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <Input
-            className="find-input"
-            name="find"
-            onChangeValue={this.onChangeInput.bind(this)}
-            placeholder="Find your friend!"
-          />
-          <Button className="find-button" text="Find" />
-        </form>
-        {dialogs ? (
-          <WarningMessage buttonText="You currently have no dialogs" />
-        ) : null}
-        <ul>
-          {dialogs.map(dialog => {
-            return (
-              <li key={dialog.id}>
-                <NavLink
-                  to={"/dialog/" + dialog.id}
-                  style={{textDecoration: "none"}}
-                >
-                  <Dialog
-                    id={dialog.id}
-                    image={dialog.image}
-                    lastOnline={dialog.lastOnline}
-                    Change={this.ChangeDialog.bind(this)}
-                    login={dialog.login}
-                  />
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+  const {dialogs, isLoading} = props.dialogs;
+  const {login} = props.login;
+  if (isLoading) return <Loading />;
+  return (
+    <div className="sidebar">
+      <RedirectArea text=" ← Your profile" path={"/user/" + login} />
+      <form onSubmit={onSubmit.bind(this)}>
+        <Input
+          className="find-input"
+          name="find"
+          onChangeValue={onChangeInput.bind(this)}
+          placeholder="Find your friend!"
+        />
+        <Button className="find-button" text="Find" />
+      </form>
+      {dialogs ? (
+        <WarningMessage buttonText="You currently have no dialogs" />
+      ) : null}
+      <ul>
+        {dialogs.map(dialog => {
+          return (
+            <li key={dialog.id}>
+              <NavLink
+                to={"/dialog/" + dialog.id}
+                style={{textDecoration: "none"}}
+              >
+                <Dialog
+                  id={dialog.id}
+                  image={dialog.image}
+                  lastOnline={dialog.lastOnline}
+                  Change={ChangeDialog.bind(this)}
+                  login={dialog.login}
+                />
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+Sidebar.propTypes = {
+  findUser: PropTypes.func.isRequired,
+  getDialogData: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   dialogs: state.dialog,

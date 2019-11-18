@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import classNames from "classnames";
 import {Redirect} from "react-router-dom";
@@ -10,94 +10,101 @@ import {Button, Loading, WarningMessage} from "../../../components";
 
 import "./UserPage.css";
 
-class UserPage extends Component {
-  state = {singOut: false};
-  componentDidMount() {
-    this.props.getUser(
-      "/user",
-      window.location.pathname.split("/").slice(-1)[0]
-    );
-    this.props.getUserId();
-  }
-  onClickDeleteUser() {
-    this.props.deleteUser("/user", this.props.user.id);
-  }
+const UserPage = props => {
+  const getUser = props.getUser;
+  const getUserId = props.getUserId;
+  const [singOut, setSingOut] = useState(false);
+  useEffect(() => {
+    getUser("/user", window.location.pathname.split("/").slice(-1)[0]);
+    getUserId();
+  }, [getUser, getUserId]);
+  const onClickDeleteUser = () => {
+    props.deleteUser("/user", props.user.id);
+  };
 
-  onClickSingOut() {
+  const onClickSingOut = () => {
     localStorage.setItem("token", null);
-    this.setState({singOut: true});
-  }
+    setSingOut(true);
+  };
 
-  onClickCreateDialog() {
-    this.props.addDialog("/dialog", this.props.user.id);
-  }
+  const onClickCreateDialog = () => {
+    props.addDialog("/dialog", props.user.id);
+  };
 
-  render() {
-    const ownerId = +this.props.authData.id;
-    const {
-      id,
-      login,
-      email,
-      image,
-      last_online,
-      createAt,
-      isLoading,
-      error
-    } = this.props.user;
+  const userButtons = () => {
+    if (ownerId === id) {
+      return (
+        <div>
+          <Button
+            onClick={onClickSingOut.bind(this)}
+            text="sing out"
+            className="user-button"
+          />
+          <Button text="edit profile" className="user-button" />
+          <Button
+            onClick={onClickDeleteUser.bind(this)}
+            text="delete Account"
+            className="user-button"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Button
+            text="create dialog"
+            onClick={onClickCreateDialog.bind(this)}
+            className="user-button"
+          />
+        </div>
+      );
+    }
+  };
 
-    if (isLoading) return <Loading />;
+  const ownerId = +props.authData.id;
+  const {
+    id,
+    login,
+    email,
+    image,
+    last_online,
+    createAt,
+    isLoading,
+    error
+  } = props.user;
 
-    return (
-      <div className="user-page">
-        {this.state.singOut && <Redirect to="/api/user/login" />}
-        {error ? (
-          <WarningMessage topText={error} error={true} />
-        ) : (
-          <div>
-            <div className="user-line">
-              <div
-                className={classNames(
-                  "line user-circle",
-                  last_online ? "offline" : "online"
-                )}
-              ></div>
-              <i>{last_online ? last_online : "online"}</i>
-            </div>
-
-            <img src={image} alt="" />
-
-            <div className="user-data">
-              <h5>{login}</h5>
-              <h4>email: {email}</h4>
-              {ownerId === id ? (
-                <Button
-                  onClick={this.onClickSingOut.bind(this)}
-                  text="sing out"
-                  className="user-button"
-                />
-              ) : (
-                <Button
-                  text="create dialog"
-                  onClick={this.onClickCreateDialog.bind(this)}
-                  className="user-button"
-                />
+  if (isLoading) return <Loading />;
+  return (
+    <div className="user-page">
+      {singOut && <Redirect to="/api/user/login" />}
+      {error ? (
+        <WarningMessage topText={error} error={true} />
+      ) : (
+        <div>
+          <div className="user-line">
+            <div
+              className={classNames(
+                "line user-circle",
+                last_online ? "offline" : "online"
               )}
-              {ownerId === id ? (
-                <Button
-                  onClick={this.onClickDeleteUser.bind(this)}
-                  text="delete Account"
-                  className="user-button"
-                />
-              ) : null}
-
-              <p>Account created: {createAt}</p>
-            </div>
+            ></div>
+            <i>{last_online ? last_online : "online"}</i>
           </div>
-        )}
-      </div>
-    );
-  }
-}
+
+          <img src={image} alt="" />
+
+          <div className="user-data">
+            <h5>{login}</h5>
+            <h4>email: {email}</h4>
+            {userButtons()}
+
+            <p>Account created: {createAt}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({user: state.user, authData: state.authData});
 
