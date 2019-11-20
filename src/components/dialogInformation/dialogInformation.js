@@ -7,7 +7,7 @@ const DialogInformation = props => {
   return (
     <div className="dialog-information">
       <h2>{props.name}</h2>
-      <p>{props.lastOnline ? "last seen:" + props.lastOnline : "online"}</p>
+      <p>{props.lastOnline ? "last seen: " + props.lastOnline : "online"}</p>
     </div>
   );
 };

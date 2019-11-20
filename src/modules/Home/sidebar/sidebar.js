@@ -18,16 +18,11 @@ import "./sidebar.css";
 const Sidebar = props => {
   const getDialogs = props.getDialogs;
   const getLogin = props.getLogin;
-  const redirect = props.dialogs.redirect;
-  const error = props.dialogs.error;
   const [findUser, setFindUser] = useState(null);
   useEffect(() => {
     getDialogs("/");
     getLogin();
-    if (redirect) {
-      return <Redirect to="/api/user/login" err={error} />;
-    }
-  }, [getDialogs, getLogin, redirect, error]);
+  }, [getDialogs, getLogin]);
 
   const onChangeInput = value => {
     setFindUser(value);
@@ -41,11 +36,12 @@ const Sidebar = props => {
     props.getDialogData(login, lastOnline);
   };
 
-  const {dialogs, isLoading} = props.dialogs;
+  const {dialogs, isLoading, error, redirect} = props.dialogs;
   const {login} = props.login;
   if (isLoading) return <Loading />;
   return (
     <div className="sidebar">
+      {redirect ? <Redirect to="/api/user/login" err={error} /> : null}
       <RedirectArea text=" ← Your profile" path={"/user/" + login} />
       <form onSubmit={onSubmit.bind(this)}>
         <Input

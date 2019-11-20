@@ -11,6 +11,7 @@ const FormSendMsg = () => {
   };
   const submitHandler = e => {
     e.preventDefault();
+    console.log(message);
     setMessage("");
   };
 

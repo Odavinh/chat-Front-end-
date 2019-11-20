@@ -1,6 +1,7 @@
 .user-page {
   color: rgb(0, 0, 66);
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.383);
 }
 
 .user-page img {
@@ -23,16 +24,18 @@
 .user-page .user-line {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-left: 80%;
-  width: 40px;
+  width: 50px;
   margin-top: 10px;
-  margin-right: 5px;
+}
+
+.user-page i {
+  width: 60px;
 }
 .user-page .user-circle {
   width: 20px;
   height: 20px;
   box-shadow: 2px 2px 10px #ff5f5f;
-  margin-left: 50px;
+  margin-left: 30px;
   margin-right: 10px;
 }
 

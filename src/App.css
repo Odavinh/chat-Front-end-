@@ -1,3 +1,9 @@
+.App {
+  background-image: url("./fon.png");
+  background-size: cover;
+  overflow: hidden;
+}
+
 .link {
   color: #0173b1;
   text-decoration: none;
