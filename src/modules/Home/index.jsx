@@ -27,30 +27,34 @@ const Home = () => {
   };
 
   return (
-    <HomeBloc className="home">
-      {redirectToUserPage()}
-      <Sidebar
-        findUser={findUser.bind(this)}
-        getDialogData={getDialogData.bind(this)}
-      />
-      <Switch>
-        <Route
-          path={"/dialog/:dialogId"}
-          component={() => <DialogBody dialogData={dialogData} />}
+    <div className="main">
+      <div className="right"></div>
+      <HomeBloc className="home">
+        {redirectToUserPage()}
+        <Sidebar
+          findUser={findUser.bind(this)}
+          getDialogData={getDialogData.bind(this)}
         />
-        <Route path={"/user/:login"} component={UserPage} />
-        <Route
-          except
-          path={"/"}
-          component={() => (
-            <WarningMessage
-              buttonText="Select a dialog or open a user page"
-              className="warning"
-            />
-          )}
-        />
-      </Switch>
-    </HomeBloc>
+        <Switch>
+          <Route
+            path={"/dialog/:dialogId"}
+            component={() => <DialogBody dialogData={dialogData} />}
+          />
+          <Route path={"/user/:login"} component={UserPage} />
+          <Route
+            except
+            path={"/"}
+            component={() => (
+              <WarningMessage
+                buttonText="Select a dialog or open a user page"
+                className="warning"
+              />
+            )}
+          />
+        </Switch>
+      </HomeBloc>
+      <div className="right"></div>
+    </div>
   );
 };
 

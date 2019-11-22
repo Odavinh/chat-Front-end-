@@ -19,6 +19,7 @@ const Sidebar = props => {
   const getDialogs = props.getDialogs;
   const getLogin = props.getLogin;
   const [findUser, setFindUser] = useState(null);
+  const {dialogs, isLoading, error, redirect} = props.dialogs;
   useEffect(() => {
     getDialogs("/");
     getLogin();
@@ -36,13 +37,11 @@ const Sidebar = props => {
     props.getDialogData(login, lastOnline);
   };
 
-  const {dialogs, isLoading, error, redirect} = props.dialogs;
-  const {login} = props.login;
   if (isLoading) return <Loading />;
   return (
     <div className="sidebar">
       {redirect ? <Redirect to="/api/user/login" err={error} /> : null}
-      <RedirectArea text=" ← Your profile" path={"/user/" + login} />
+      <RedirectArea text=" ← Your profile" path={"/user/" + props.user.login} />
       <form onSubmit={onSubmit.bind(this)}>
         <Input
           className="find-input"
@@ -86,7 +85,7 @@ Sidebar.propTypes = {
 
 const mapStateToProps = state => ({
   dialogs: state.dialog,
-  login: state.authData
+  user: state.authData
 });
 
 const mapDispatchToProps = dispatch => ({

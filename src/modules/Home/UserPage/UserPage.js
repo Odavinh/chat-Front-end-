@@ -14,10 +14,11 @@ const UserPage = props => {
   const getUser = props.getUser;
   const getUserId = props.getUserId;
   const [singOut, setSingOut] = useState(false);
+  const params = window.location.pathname.split("/").slice(-1)[0];
   useEffect(() => {
-    getUser("/user", window.location.pathname.split("/").slice(-1)[0]);
+    getUser("/user", params);
     getUserId();
-  }, [getUser, getUserId]);
+  }, [getUser, getUserId, params]);
   const onClickDeleteUser = () => {
     props.deleteUser("/user", props.user.id);
   };
@@ -44,7 +45,7 @@ const UserPage = props => {
           <Button
             onClick={onClickDeleteUser.bind(this)}
             text="delete Account"
-            className="user-button"
+            className="user-button delete"
           />
         </div>
       );
@@ -98,7 +99,7 @@ const UserPage = props => {
             <h4>email: {email}</h4>
             {userButtons()}
 
-            <p>Account created: {createAt}</p>
+            <p>Account created: {Date(createAt).slice(0, 21)}</p>
           </div>
         </div>
       )}

@@ -11,13 +11,13 @@ import "./messageArea.css";
 const MessageArea = props => {
   const getMessages = props.getMessages;
   const getId = props.getId;
+  const params = window.location.pathname.split("/").slice(-1)[0];
   useEffect(() => {
-    getMessages("/dialog", window.location.pathname.split("/").slice(-1)[0]);
+    getMessages("/dialog", params);
     getId();
-  }, [getMessages, getId]);
+  }, [params, getId, getMessages]);
 
   const {messages, isLoading, error} = props.messages;
-  const id = props.userId;
 
   if (isLoading) return <Loading />;
   return (
@@ -34,7 +34,7 @@ const MessageArea = props => {
                       id={message.id}
                       text={message.text}
                       date={message.date}
-                      isAuthor={+message.author === +id}
+                      isAuthor={+message.author === +props.id}
                     />
                   </li>
                 );
